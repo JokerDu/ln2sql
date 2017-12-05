@@ -47,10 +47,13 @@ class SelectParser(Thread):
             self.select_object = Select()
             is_count = False
             number_of_select_column = len(self.columns_of_select)
-
             if number_of_select_column == 0:
                 for count_keyword in self.count_keywords:
-                    if count_keyword in (word.lower() for word in self.phrase):
+                    # if count_keyword in (word.lower() for word in self.phrase):
+                    # so that matches multiple words rather than just single word for COUNT
+                    # (e.g. -> "how many city there are in which the employe name is aman ?" )
+                    lower_self_phrase = ' '.join(word.lower() for word in self.phrase)
+                    if count_keyword in lower_self_phrase:
                         is_count = True
 
                 if is_count:
@@ -376,6 +379,11 @@ class WhereParser(Thread):
 
                 phrase_keyword = str(phrase[i]).lower()  # for robust keyword matching
 
+                # @todo multiple word matching
+                # for multiple words this type of single word offset matching wont work,
+                # till now greater than was working because greater was also present in the list which was getting matched
+                # to check try "more than" which is also from the same greater than list (e.g-> how many name there are in emp in which the cityId is more than 3)
+
                 if phrase_keyword in self.count_keywords:  # before the column
                     self.count_keyword_offset.append(i)
                 if phrase_keyword in self.sum_keywords:  # before the column
@@ -595,7 +603,7 @@ class Parser:
         self.like_keywords = config.get_like_keywords()
         # self.distinct_keywords = config.get_distinct_keywords()
         # @todo DISTINCT functionality needs to be implemented
-        
+
     def set_thesaurus(self, thesaurus):
         self.thesaurus_object = thesaurus
 
