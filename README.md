@@ -117,8 +117,9 @@ Parameters:
 	-t <path>				path to thesaurus file
 ```
 example of usage:
+
 ```
-python ln2sql.py -d database/city.sql -l lang/english.csv -j output.json -i "Count how many city there are with the name blob?"
+python ln2sql.py -d database/city.sql -l lang/english.csv -j output.json -i "how many city there are in which the employee name is similar to aman ?"
 ```
 
 Values for WHERE clause should be specified in single(') or double(") quotes for multi word values.example :
