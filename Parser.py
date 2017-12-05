@@ -47,6 +47,7 @@ class SelectParser(Thread):
             self.select_object = Select()
             is_count = False
             number_of_select_column = len(self.columns_of_select)
+
             if number_of_select_column == 0:
                 for count_keyword in self.count_keywords:
                     # if count_keyword in (word.lower() for word in self.phrase):
@@ -74,22 +75,26 @@ class SelectParser(Thread):
                 for i in range(0, len(select_phrases)):
                     select_type = None
 
-                    phrase = [word.lower() for word in select_phrases[i]]
+                    # phrase = [word.lower() for word in select_phrases[i]]
+                    # so that matches multiple words rather than just single word in select type of phrases
+                    # (e.g. -> "how many name there are in emp in which the cityId is more than 3" )
+
+                    lower_select_phrase = ' '.join(word.lower() for word in select_phrases[i])
 
                     for keyword in self.average_keywords:
-                        if keyword in phrase:
+                        if keyword in lower_select_phrase:
                             select_type = 'AVG'
                     for keyword in self.count_keywords:
-                        if keyword in phrase:
+                        if keyword in lower_select_phrase:
                             select_type = 'COUNT'
                     for keyword in self.max_keywords:
-                        if keyword in phrase:
+                        if keyword in lower_select_phrase:
                             select_type = 'MAX'
                     for keyword in self.min_keywords:
-                        if keyword in phrase:
+                        if keyword in lower_select_phrase:
                             select_type = 'MIN'
                     for keyword in self.sum_keywords:
-                        if keyword in phrase:
+                        if keyword in lower_select_phrase:
                             select_type = 'SUM'
 
                     if (i != len(select_phrases) - 1) or (select_type is not None):
