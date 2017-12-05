@@ -7,6 +7,7 @@ import string
 from threading import Thread
 from ParsingException import ParsingException
 from Query import *
+import functools
 
 reload(sys)
 sys.setdefaultencoding("utf-8")
@@ -561,7 +562,7 @@ class OrderByParser(Thread):
         return self.order_by_objects
 
 
-# ---------------------------------------PART OF ALGORITHM FOR VALUE EXTRACTION STRARTS
+# --------------------------------PART OF ALGORITHM FOR VALUE EXTRACTION STRARTS
 def _myCmp(s1,s2):
     # if len(s1.split()) == 1 and len(s2.split()) == 1:
     if len(s1.split()) == len(s2.split()) :
@@ -576,8 +577,8 @@ def _myCmp(s1,s2):
             return -1
 
 def _transformationSortAlgo(transitionalList):
-    return sorted(transitionalList,cmp=_myCmp,reverse=True)
-# ---------------------------------------PART OF ALGORITHM FOR VALUE EXTRACTION ENDS
+    return sorted(transitionalList, key=functools.cmp_to_key(_myCmp),reverse=True)
+# -----------------------------------PART OF ALGORITHM FOR VALUE EXTRACTION ENDS
 
 
 class Parser:
