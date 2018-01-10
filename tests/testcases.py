@@ -50,7 +50,7 @@ class TestClass():
             print Bcolors.OKBLUE + "=> " + outputRetrieved + Bcolors.ENDC + "\n"
             print "----------------------------------------------------------\n"
             print
-        else :
+        if status == "FAIL" :
             differenceList = [li for li in difflib.ndiff(outputRetrieved.split(),output.split()) if li[0] != ' ']
             print Bcolors.BOLD + Bcolors.FAIL + "---- FAILED ----" + Bcolors.ENDC + "\n"
             print "-> " + input + "\n"
@@ -62,15 +62,16 @@ class TestClass():
         return
 
 
-    def runQueries(self):
+    def runTests(self):
 
-        allQueries = [
+        allTests = [
             {
                 'input': 'List me the info of city table',
                 'database': DATABASE_PATH + 'city.sql',
                 'language': LANG_PATH + 'english.csv',
                 'output': 'SELECT * FROM city;'
-            },{
+            },
+            {
                 'input': 'What is the number of the city in this database?',
                 'database': DATABASE_PATH + 'city.sql',
                 'language': LANG_PATH + 'english.csv',
@@ -199,7 +200,7 @@ class TestClass():
 
         ]
 
-        for test in allQueries:
+        for test in allTests:
             capturedOutput = StringIO.StringIO()
             sys.stdout = capturedOutput
             ln2sql_main(['-d', test['database'], '-l', test['language'], '-i', test['input']])
@@ -220,6 +221,6 @@ class TestClass():
 if __name__ == '__main__':
     print "== == == == == == == == == == == == == == == == == == == == == == == \n"
     obj = TestClass()
-    obj.runQueries()
+    obj.runTests()
     print Bcolors.OKBLUE + "Testcases Passed : " + str(obj.success) + Bcolors.ENDC
     print Bcolors.BOLD + Bcolors.FAIL + "Testcases Failed : " + str(obj.failure) + Bcolors.ENDC + "\n"
