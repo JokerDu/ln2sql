@@ -222,5 +222,9 @@ if __name__ == '__main__':
     print "== == == == == == == == == == == == == == == == == == == == == == == \n"
     obj = TestClass()
     obj.runTests()
-    print Bcolors.OKBLUE + "Testcases Passed : " + str(obj.success) + Bcolors.ENDC
-    print Bcolors.BOLD + Bcolors.FAIL + "Testcases Failed : " + str(obj.failure) + Bcolors.ENDC + "\n"
+    print Bcolors.WARNING + " +--------------------------" + Bcolors.ENDC 	
+    print Bcolors.WARNING + " |  " + Bcolors.OKBLUE + "Testcases Passed : " + str(obj.success) + Bcolors.ENDC
+    print Bcolors.WARNING + " |  " + Bcolors.BOLD + Bcolors.FAIL + "Testcases Failed : " + str(obj.failure) + Bcolors.ENDC 
+    print Bcolors.WARNING + " +--------------------------\n" + Bcolors.ENDC
+    	
+
